@@ -1,2048 +1,355 @@
-/* ===== IMPORTS & VARIABLES ===== */
-:root {
-    --primary: #253a6e;
-    --secondary: #1a1a2e;
-    --accent: #e94560;
-    --purple: #7c3aed;
-    --purple-light: #a78bfa;
-    --amber: #f59e0b;
-    --bg: #faf5ff;
-    --bg-alt: #f3e8ff;
-    --card: #ffffff;
-    --text: #1f2937;
-    --text-muted: #6b7280;
-    --border: #e5e7eb;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
-    --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-full: 9999px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ===== RESET ===== */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--text);
-    background-color: var(--bg);
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ===== CURSOR GLOW ===== */
-.cursor-glow {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(124, 58, 237, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.3s;
-    opacity: 0;
-}
-
-body:hover .cursor-glow {
-    opacity: 1;
-}
-
-/* ===== HEADER ===== */
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(23, 46, 97, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    padding: 0;
-    transition: var(--transition);
-}
-
-header.scrolled {
-    background: rgba(23, 46, 97, 0.95);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 20px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 24px;
-    flex: 1;
-}
-
-.nav-link-item {
-    color: rgba(255, 255, 255, 0.7);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 0.85em;
-    letter-spacing: 1.5px;
-    transition: var(--transition);
-    position: relative;
-}
-
-.nav-link-item::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: var(--transition);
-}
-
-.nav-link-item:hover {
-    color: white;
-}
-
-.nav-link-item:hover::after {
-    width: 100%;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-}
-
-.logo-text {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.8em;
-    font-weight: 900;
-    color: white;
-    letter-spacing: 3px;
-}
-
-.logo-sparkle {
-    color: var(--accent);
-    font-size: 0.8em;
-    animation: sparkle 2s ease-in-out infinite;
-}
-
-@keyframes sparkle {
-    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    50% { opacity: 0.5; transform: scale(1.2) rotate(180deg); }
-}
-
-.nav-icons {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex: 1;
-    justify-content: flex-end;
-}
-
-.cart-link {
-    position: relative;
-    color: white;
-    display: flex;
-    align-items: center;
-    transition: var(--transition);
-}
-
-.cart-link:hover {
-    color: var(--accent);
-    transform: scale(1.1);
-}
-
-.cart-icon {
-    width: 24px;
-    height: 24px;
-}
-
-.cart-badge {
-    position: absolute;
-    top: -8px;
-    right: -10px;
-    background: var(--accent);
-    color: white;
-    font-size: 0.65em;
-    font-weight: 700;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Poppins', sans-serif;
-}
-
-.search-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.search-input {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: white;
-    padding: 8px 40px 8px 16px;
-    border-radius: var(--radius-full);
-    font-size: 0.85em;
-    width: 180px;
-    transition: var(--transition);
-    font-family: 'Inter', sans-serif;
-}
-
-.search-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.search-input:focus {
-    outline: none;
-    width: 240px;
-    background: rgba(255, 255, 255, 0.15);
-    border-color: var(--purple-light);
-}
-
-.search-btn {
-    position: absolute;
-    right: 8px;
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: var(--transition);
-}
-
-.search-btn:hover {
-    color: white;
-}
-
-.search-suggestions {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: 0;
-    background: white;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-lg);
-    display: none;
-    overflow: hidden;
-    z-index: 100;
-}
-
-.search-suggestions.show {
-    display: block;
-}
-
-.search-suggestion-item {
-    padding: 12px 16px;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: var(--transition);
-    border-bottom: 1px solid var(--border);
-}
-
-.search-suggestion-item:last-child {
-    border-bottom: none;
-}
-
-.search-suggestion-item:hover {
-    background: var(--bg-alt);
-    color: var(--purple);
-}
-
-/* ===== HERO SECTION ===== */
-.hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-}
-
-.hero-bg-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(26, 26, 46, 0.85) 0%,
-        rgba(124, 58, 237, 0.5) 50%,
-        rgba(233, 69, 96, 0.4) 100%
-    );
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 0 20px;
-    max-width: 700px;
-}
-
-.hero-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: white;
-    padding: 8px 24px;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.8em;
-    font-weight: 600;
-    letter-spacing: 2px;
-    margin-bottom: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    animation: fadeInDown 0.8s ease-out;
-}
-
-.hero-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    color: white;
-    line-height: 1.1;
-    margin-bottom: 20px;
-}
-
-.hero-title-line {
-    display: block;
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    animation: fadeInUp 0.8s ease-out both;
-}
-
-.hero-title-line:nth-child(1) { animation-delay: 0.2s; }
-.hero-title-line:nth-child(2) { animation-delay: 0.4s; }
-.hero-title-line:nth-child(3) { animation-delay: 0.6s; }
-
-.hero-title-accent {
-    background: linear-gradient(135deg, var(--accent), var(--purple-light), var(--amber));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.hero-subtitle {
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1.1em;
-    margin-bottom: 36px;
-    animation: fadeInUp 0.8s ease-out 0.8s both;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    animation: fadeInUp 0.8s ease-out 1s both;
-}
-
-/* Buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 32px;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.btn-primary {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-}
-
-.btn-primary:hover {
-    background: #d63851;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
-}
-
-.btn-outline {
-    background: transparent;
-    color: white;
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.btn-outline:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: white;
-    transform: translateY(-3px);
-}
-
-/* Floating Emojis */
-.hero-floating-elements {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.floating-emoji {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    font-size: 2rem;
-    animation: float 6s ease-in-out infinite;
-    animation-delay: var(--delay);
-    opacity: 0.6;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    33% { transform: translateY(-20px) rotate(10deg); }
-    66% { transform: translateY(10px) rotate(-5deg); }
-}
-
-/* Scroll Indicator */
-.hero-scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.75em;
-    letter-spacing: 2px;
-    font-family: 'Poppins', sans-serif;
-    animation: fadeInUp 1s ease-out 1.5s both;
-}
-
-.scroll-arrow {
-    width: 2px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-    border-radius: 2px;
-}
-
-.scroll-arrow::after {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    animation: scrollDown 2s ease-in-out infinite;
-}
-
-@keyframes scrollDown {
-    0% { top: -100%; }
-    50% { top: 100%; }
-    100% { top: 100%; }
-}
-
-/* ===== MARQUEE ===== */
-.marquee-section {
-    background: var(--primary);
-    padding: 14px 0;
-    overflow: hidden;
-    position: relative;
-    z-index: 10;
-}
-
-.marquee-track {
-    display: flex;
-    width: max-content;
-}
-
-.marquee-content {
-    display: flex;
-    gap: 40px;
-    animation: marquee 30s linear infinite;
-    white-space: nowrap;
-}
-
-.marquee-content span {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.85em;
-    color: white;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-@keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-/* ===== SECTIONS ===== */
-.section {
-    padding: 80px 0;
-    position: relative;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.section-tag {
-    display: inline-block;
-    background: var(--bg-alt);
-    color: var(--purple);
-    padding: 6px 18px;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.8em;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.section-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-}
-
-.section-desc {
-    color: var(--text-muted);
-    font-size: 1.05em;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* ===== NEW ARRIVALS / PRODUCTS GRID ===== */
-.new-arrivals {
-    background: var(--bg);
-}
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 24px;
-}
-
-.product-card {
-    background: var(--card);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: var(--transition);
-    border: 1px solid var(--border);
-    display: block;
-}
-
-.product-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--purple-light);
-}
-
-.product-card-image {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1;
-    background: #f9f5ff;
-}
-
-.product-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 16px;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.product-card:hover .product-card-image img {
-    transform: scale(1.1);
-}
-
-.product-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: var(--accent);
-    color: white;
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.7em;
-    font-weight: 700;
-    letter-spacing: 1px;
-    z-index: 2;
-}
-
-.badge-hot {
-    background: var(--amber);
-    color: var(--primary);
-}
-
-.badge-limited {
-    background: var(--purple);
-}
-
-.product-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(124, 58, 237, 0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: var(--transition);
-}
-
-.product-card:hover .product-card-overlay {
-    opacity: 1;
-}
-
-.product-card-overlay span {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.95em;
-    letter-spacing: 1px;
-    transform: translateY(10px);
-    transition: var(--transition);
-}
-
-.product-card:hover .product-card-overlay span {
-    transform: translateY(0);
-}
-
-.product-card-info {
-    padding: 16px;
-}
-
-.product-card-name {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.85em;
-    color: var(--text);
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-.product-card-price {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    color: var(--accent);
-    font-size: 1em;
-}
-
-/* ===== SHOP BY CATEGORY ===== */
-.shop-category {
-    background: var(--bg-alt);
-}
-
-.category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.category-card {
-    display: block;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-.category-card:hover {
-    transform: translateY(-8px);
-}
-
-.category-card-inner {
-    position: relative;
-    aspect-ratio: 4/5;
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-}
-
-.category-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.category-card:hover .category-img {
-    transform: scale(1.1);
-}
-
-.category-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(48, 88, 173, 0.95) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
-    display: flex;
-    align-items: flex-end;
-    padding: 30px;
-    transition: var(--transition);
-}
-
-.category-card:hover .category-overlay {
-    background: linear-gradient(to top, rgba(58, 82, 237, 0.9) 0%, rgba(124, 58, 237, 0.4) 50%, rgba(124, 58, 237, 0.1) 100%);
-}
-
-.category-overlay-content {
-    color: white;
-}
-
-.category-icon {
-    font-size: 2em;
-    display: block;
-    margin-bottom: 8px;
-}
-
-.category-name {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 1.5em;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
-}
-
-.category-count {
-    font-size: 0.85em;
-    opacity: 0.8;
-    margin-bottom: 12px;
-}
-
-.category-cta {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: var(--transition);
-    display: inline-block;
-    border-bottom: 2px solid white;
-    padding-bottom: 2px;
-}
-
-.category-card:hover .category-cta {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ===== FEATURES BANNER ===== */
-.features-banner {
-    background: var(--primary);
-    padding: 40px 0;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-}
-
-.feature-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    transition: var(--transition);
-}
-
-.feature-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.feature-icon {
-    font-size: 2em;
-    flex-shrink: 0;
-}
-
-.feature-text h4 {
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    font-weight: 700;
-    font-size: 0.95em;
-    margin-bottom: 2px;
-}
-
-.feature-text p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8em;
-}
-
-/* ===== TESTIMONIALS ===== */
-.testimonials {
-    position: relative;
-    overflow: hidden;
-}
-
-.testimonials-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    z-index: 0;
-}
-
-.testimonials-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(26, 26, 46, 0.8);
-}
-
-.testimonials .container {
-    position: relative;
-    z-index: 1;
-}
-
-.testimonial-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-}
-
-.testimonial-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: var(--radius-lg);
-    padding: 30px;
-    transition: var(--transition);
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-.testimonial-stars {
-    font-size: 1.1em;
-    margin-bottom: 16px;
-    letter-spacing: 2px;
-}
-
-.testimonial-text {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.95em;
-    line-height: 1.7;
-    margin-bottom: 20px;
-    font-style: italic;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.testimonial-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.1em;
-}
-
-.testimonial-name {
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.9em;
-}
-
-.testimonial-role {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.8em;
-}
-
-/* ===== NEWSLETTER ===== */
-.newsletter {
-    background: var(--bg);
-}
-
-.newsletter-card {
-    background: linear-gradient(135deg, var(--secondary) 0%, #16213e 100%);
-    border-radius: var(--radius-lg);
-    padding: 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    overflow: hidden;
-    position: relative;
-}
-
-.newsletter-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: rgba(124, 58, 237, 0.15);
-    pointer-events: none;
-}
-
-.newsletter-content {
-    position: relative;
-    z-index: 1;
-}
-
-.newsletter-content .section-tag {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--purple-light);
-}
-
-.newsletter-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 2em;
-    color: white;
-    margin: 12px 0;
-}
-
-.newsletter-desc {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.95em;
-    margin-bottom: 24px;
-    line-height: 1.6;
-}
-
-.newsletter-form {
-    margin-bottom: 12px;
-}
-
-.newsletter-input-group {
-    display: flex;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-full);
-    padding: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.newsletter-input {
-    flex: 1;
-    background: none;
-    border: none;
-    color: white;
-    padding: 10px 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9em;
-    outline: none;
-}
-
-.newsletter-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-}
-
-.newsletter-btn {
-    padding: 10px 24px;
-    border: none;
-    white-space: nowrap;
-}
-
-.newsletter-note {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.8em;
-}
-
-.newsletter-image {
-    position: relative;
-    z-index: 1;
-    border-radius: var(--radius-md);
-    overflow: hidden;
-}
-
-.newsletter-image img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: var(--radius-md);
-}
-
-/* ===== FOOTER ===== */
-footer {
-    background: var(--primary);
-    color: white;
-    position: relative;
-    z-index: 10;
-}
-
-.footer-top {
-    padding: 60px 0 40px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 40px;
-}
-
-.footer-logo {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    font-size: 1.5em;
-    letter-spacing: 3px;
-    margin-bottom: 16px;
-}
-
-.footer-about {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9em;
-    line-height: 1.7;
-    margin-bottom: 20px;
-}
-
-.footer-social {
-    display: flex;
-    gap: 12px;
-}
-
-.social-link {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.7);
-    transition: var(--transition);
-}
-
-.social-link:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-3px);
-}
-
-.footer-heading {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.footer-link-list li {
-    margin-bottom: 10px;
-}
-
-.footer-link-list a {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.9em;
-    transition: var(--transition);
-}
-
-.footer-link-list a:hover {
-    color: white;
-    padding-left: 5px;
-}
-
-.payment-methods {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.payment-badge {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 0.7);
-    padding: 6px 12px;
-    border-radius: var(--radius-sm);
-    font-size: 0.75em;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-bottom {
-    padding: 20px 0;
-    text-align: center;
-}
-
-.footer-bottom p {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 0.85em;
-}
-
-/* ===== BACK TO TOP ===== */
-.back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(233, 69, 96, 0.4);
-    transition: var(--transition);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(20px);
-    z-index: 999;
-}
-
-.back-to-top.visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.back-to-top:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(233, 69, 96, 0.5);
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    transition-delay: var(--delay, 0s);
-}
-
-.animate-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
-    .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 30px;
-    }
-    
-    .newsletter-card {
-        padding: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        flex-wrap: wrap;
-        gap: 12px;
-        padding: 12px 16px;
-    }
-
-    .nav-links {
-        order: 3;
-        width: 100%;
-        justify-content: center;
-        gap: 16px;
-        display: none;
-    }
-
-    .logo {
-        order: 1;
-    }
-
-    .nav-icons {
-        order: 2;
-        flex: 0;
-    }
-
-    .hero-title-line {
-        font-size: clamp(2rem, 10vw, 3.5rem);
-    }
-
-    .category-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .newsletter-card {
-        grid-template-columns: 1fr;
-        padding: 30px;
-    }
-
-    .newsletter-image {
-        display: none;
-    }
-
-    .footer-grid {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-
-    .footer-social {
-        justify-content: center;
-    }
-
-    .payment-methods {
-        justify-content: center;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .search-input {
-        width: 140px;
-    }
-
-    .search-input:focus {
-        width: 180px;
-    }
-}
-
-@media (max-width: 480px) {
-    .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .product-card-info {
-        padding: 10px;
-    }
-
-    .product-card-name {
-        font-size: 0.75em;
-    }
-
-    .product-card-price {
-        font-size: 0.85em;
-    }
-
-    .features-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .newsletter-input-group {
-        flex-direction: column;
-        border-radius: var(--radius-md);
-    }
-
-    .newsletter-btn {
-        border-radius: var(--radius-full);
-        justify-content: center;
-    }
-
-    .hero-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .btn {
-        width: 100%;
-        justify-content: center;
-        max-width: 280px;
-    }
-}
-
-/* ===== SUB-PAGE STYLES ===== */
-.subpage-header {
-    background: var(--primary);
-    padding: 16px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-.subpage-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.back-btn {
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 0.85em;
-    transition: var(--transition);
-}
-
-.back-btn:hover {
-    color: var(--accent);
-    transform: translateX(-3px);
-}
-
-.subpage-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    color: white;
-    font-size: 1.5em;
-    letter-spacing: 3px;
-}
-
-.subpage-cart-link {
-    color: white;
-    position: relative;
-    transition: var(--transition);
-}
-
-.subpage-cart-link:hover {
-    color: var(--accent);
-    transform: scale(1.1);
-}
-
-/* Sub-page Hero */
-.subpage-hero {
-    margin-top: 70px;
-    padding: 60px 0 40px;
-    text-align: center;
-    background: linear-gradient(135deg, var(--bg-alt) 0%, var(--bg) 100%);
-}
-
-.subpage-hero h1 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 900;
-    font-size: 2.5em;
-    color: var(--text);
-    margin-bottom: 8px;
-}
-
-.subpage-hero p {
-    color: var(--text-muted);
-    font-size: 1em;
-}
-
-/* Sub-page Product Grid */
-.subpage-products {
-    padding: 40px 0 80px;
-}
-
-.subpage-product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.subpage-product-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: var(--transition);
-}
-
-.subpage-product-card:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--shadow-xl);
-    border-color: var(--purple-light);
-}
-
-.subpage-product-img-wrapper {
-    aspect-ratio: 1;
-    overflow: hidden;
-    background: #f9f5ff;
-    position: relative;
-}
-
-.subpage-product-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 16px;
-    transition: transform 0.5s ease;
-}
-
-.subpage-product-card:hover .subpage-product-img-wrapper img {
-    transform: scale(1.08);
-}
-
-.subpage-product-details {
-    padding: 20px;
-}
-
-.subpage-product-name {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1em;
-    color: var(--text);
-    margin-bottom: 4px;
-}
-
-.subpage-product-desc {
-    color: var(--text-muted);
-    font-size: 0.8em;
-    margin-bottom: 8px;
-    line-height: 1.5;
-}
-
-.subpage-product-specs {
-    list-style: none;
-    margin-bottom: 12px;
-}
-
-.subpage-product-specs li {
-    color: var(--text-muted);
-    font-size: 0.8em;
-    margin-bottom: 4px;
-}
-
-.subpage-product-price {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    color: var(--accent);
-    font-size: 1.15em;
-    margin-bottom: 16px;
-}
-
-.add-to-cart-btn {
-    width: 100%;
-    padding: 12px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.85em;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.add-to-cart-btn:hover {
-    background: var(--accent);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(233, 69, 96, 0.3);
-}
-
-/* Toast Message */
-.toast-message {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-100px);
-    background: var(--primary);
-    color: white;
-    padding: 14px 28px;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 0.9em;
-    box-shadow: var(--shadow-xl);
-    z-index: 10000;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    white-space: nowrap;
-}
-
-.toast-message.show {
-    transform: translateX(-50%) translateY(0);
-}
-
-/* Sub-page Footer */
-.subpage-footer {
-    background: var(--primary);
-    padding: 20px 0;
-    text-align: center;
-}
-
-.subpage-footer p {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85em;
-}
-
-/* ===== CART PAGE ===== */
-.cart-page {
-    margin-top: 70px;
-    padding: 40px 0 80px;
-    min-height: 60vh;
-}
-
-.cart-page .container {
-    max-width: 900px;
-}
-
-.cart-page-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    font-size: 2em;
-    text-align: center;
-    margin-bottom: 30px;
-    color: var(--text);
-}
-
-.cart-items-box {
-    background: var(--card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    padding: 24px;
-    margin-bottom: 24px;
-    border: 1px solid var(--border);
-}
-
-.cart-item-row {
-    display: flex;
-    align-items: center;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 16px;
-}
-
-.cart-item-row:last-child {
-    border-bottom: none;
-}
-
-.cart-item-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: var(--radius-sm);
-    background: #f9f5ff;
-}
-
-.cart-item-info {
-    flex: 1;
-}
-
-.cart-item-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.95em;
-    margin-bottom: 4px;
-}
-
-.cart-item-unit-price {
-    color: var(--text-muted);
-    font-size: 0.85em;
-}
-
-.cart-qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.qty-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: var(--bg);
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-}
-
-.qty-btn:hover {
-    background: var(--primary);
-    color: white;
-    border-color: var(--primary);
-}
-
-.qty-input {
-    width: 40px;
-    text-align: center;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 4px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    -moz-appearance: textfield;
-}
-
-.qty-input::-webkit-outer-spin-button,
-.qty-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.cart-remove-btn {
-    background: none;
-    border: none;
-    color: var(--accent);
-    cursor: pointer;
-    font-size: 0.85em;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.cart-remove-btn:hover {
-    text-decoration: underline;
-}
-
-.cart-item-subtotal {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1em;
-    min-width: 100px;
-    text-align: right;
-}
-
-.cart-empty-msg {
-    text-align: center;
-    padding: 40px;
-    color: var(--text-muted);
-    font-size: 1.1em;
-}
-
-.cart-summary-box {
-    background: var(--card);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    padding: 24px;
-    border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.cart-summary-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 300px;
-    margin-bottom: 10px;
-    font-size: 1em;
-}
-
-.cart-summary-row.total {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.2em;
-    border-top: 2px solid var(--border);
-    padding-top: 12px;
-    margin-top: 8px;
-}
-
-.cart-checkout-btn {
-    margin-top: 20px;
-    padding: 14px 32px;
-    width: 100%;
-    max-width: 300px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1em;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.cart-checkout-btn:hover {
-    background: #d63851;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
-}
-
-@media (max-width: 600px) {
-    .cart-item-row {
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .cart-item-img {
-        margin: 0 auto;
-    }
-
-    .cart-item-info {
-        width: 100%;
-    }
-
-    .cart-qty-controls {
-        justify-content: center;
-    }
-
-    .cart-item-subtotal {
-        width: 100%;
-        text-align: center;
-        margin-top: 8px;
-    }
-
-    .cart-summary-row, .cart-checkout-btn {
-        max-width: 100%;
-    }
-}
-
-/* ===== CHECKOUT PAGE ===== */
-.checkout-layout {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 30px;
-    align-items: start;
-}
-
-.checkout-left {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
-
-.checkout-section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 28px;
-    box-shadow: var(--shadow-sm);
-}
-
-.checkout-section-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.15em;
-    color: var(--text);
-    margin-bottom: 20px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-}
-
-.form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.85em;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    font-family: 'Inter', sans-serif;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95em;
-    color: var(--text);
-    background: var(--bg);
-    transition: var(--transition);
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--purple-light);
-    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
-    background: white;
-}
-
-.form-group input::placeholder {
-    color: #b0b0b0;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-/* Shipping Options */
-.shipping-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.shipping-option {
-    display: block;
-    cursor: pointer;
-}
-
-.shipping-option input[type="radio"] {
-    display: none;
-}
-
-.shipping-option-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
-    border: 2px solid var(--border);
-    border-radius: var(--radius-md);
-    transition: var(--transition);
-    background: var(--bg);
-}
-
-.shipping-option input[type="radio"]:checked + .shipping-option-content {
-    border-color: var(--purple);
-    background: rgba(124, 58, 237, 0.05);
-}
-
-.shipping-option-name {
-    display: block;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 0.95em;
-    color: var(--text);
-    margin-bottom: 2px;
-}
-
-.shipping-option-desc {
-    display: block;
-    font-size: 0.8em;
-    color: var(--text-muted);
-}
-
-.shipping-option-price {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    color: var(--text);
-    font-size: 0.95em;
-    white-space: nowrap;
-}
-
-/* Checkout Summary Sidebar */
-.checkout-right {
-    position: sticky;
-    top: 90px;
-}
-
-.checkout-summary-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 28px;
-    box-shadow: var(--shadow-md);
-}
-
-.checkout-items-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 16px;
-    max-height: 250px;
-    overflow-y: auto;
-}
-
-.checkout-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.checkout-item-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: var(--radius-sm);
-    background: #f9f5ff;
-}
-
-.checkout-item-info {
-    flex: 1;
-}
-
-.checkout-item-name {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 0.8em;
-    color: var(--text);
-    margin-bottom: 2px;
-}
-
-.checkout-item-qty {
-    font-size: 0.75em;
-    color: var(--text-muted);
-}
-
-.checkout-item-price {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 0.85em;
-    color: var(--text);
-    white-space: nowrap;
-}
-
-.checkout-summary-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 16px 0;
-}
-
-.checkout-summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: var(--text-muted);
-}
-
-.checkout-summary-row span:last-child {
-    font-weight: 600;
-    color: var(--text);
-}
-
-.checkout-total-row {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.1em;
-    color: var(--text);
-    margin-top: 4px;
-}
-
-.checkout-total-row span {
-    color: var(--text);
-}
-
-.place-order-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: var(--radius-full);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1em;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-top: 16px;
-}
-
-.place-order-btn:hover {
-    background: #d63851;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(233, 69, 96, 0.3);
-}
-
-.checkout-secure-note {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 0.75em;
-    margin-top: 12px;
-}
-
-@media (max-width: 768px) {
-    .checkout-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .checkout-right {
-        position: static;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon_atoms.ico" type="image/x-icon">
+    <title>POSIUFO - Unique & Creative Products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Header -->
+    <header id="mainHeader">
+        <nav class="navbar">
+            <ul class="nav-links">
+                <li><a href="#shop-category" class="nav-link-item">SHOP</a></li>
+                <li><a href="#new-arrivals" class="nav-link-item">NEW</a></li>
+                <li><a href="#testimonials" class="nav-link-item">REVIEWS</a></li>
+            </ul>
+            <a href="index.html" class="logo">
+                <span class="logo-text">POSIUFO</span>
+                <span class="logo-sparkle">✦</span>
+            </a>
+            <ul class="nav-icons">
+                <li>
+                    <a href="cart.html" class="cart-link">
+                        <svg class="cart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 01-8 0"></path>
+                        </svg>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="search-wrapper">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Cari produk...">
+                        <button class="search-btn" id="searchBtn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="M21 21l-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                        <div class="search-suggestions" id="searchSuggestions"></div>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-bg">
+            <img src="assets/images/bird.png" alt="Hero Background" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content animate-on-scroll">
+            <span class="hero-badge">✨ NEW COLLECTION 2025</span>
+            <h1 class="hero-title">
+                <span class="hero-title-line">Express</span>
+                <span class="hero-title-line hero-title-accent">Yourself</span>
+                <span class="hero-title-line">Uniquely</span>
+            </h1>
+            <p class="hero-subtitle">🌀hi i like to draw and make stickers + art prints</p>
+            <div class="hero-buttons">
+                <a href="#new-arrivals" class="btn btn-primary">
+                    <span>SHOP NOW</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+                <a href="#shop-category" class="btn btn-outline">EXPLORE</a>
+            </div>
+        </div>
+        <div class="hero-floating-elements">
+            <span class="floating-emoji" style="--delay: 0s; --x: 10%; --y: 20%;">⭐</span>
+            <span class="floating-emoji" style="--delay: 1s; --x: 85%; --y: 15%;">🌟</span>
+            <span class="floating-emoji" style="--delay: 2s; --x: 75%; --y: 70%;">✨</span>
+            <span class="floating-emoji" style="--delay: 0.5s; --x: 20%; --y: 75%;">💫</span>
+            <span class="floating-emoji" style="--delay: 1.5s; --x: 50%; --y: 10%;">🎨</span>
+        </div>
+    </section>
+
+    <!-- Marquee Banner -->
+    <section class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-content">
+                <span>★ NEW ARRIVALS</span>
+                <span>★ BEST SELLER</span>
+                <span>✦ HANDMADE WITH LOVE</span>
+                <span>★ WATERPROOF STICKERS</span>
+                <span>✦ UNIQUE DESIGNS</span>
+                <span>★ NEW ARRIVALS</span>
+                <span>★ BEST SELLER</span>
+                <span>✦ HANDMADE WITH LOVE</span>
+                <span>★ WATERPROOF STICKERS</span>
+                <span>✦ UNIQUE DESIGNS</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="section new-arrivals" id="new-arrivals">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">✨ FRESH DROPS</span>
+                <h2 class="section-title">New Arrivals</h2>
+                <p class="section-desc">Produk terbaru yang siap menemani harimu!</p>
+            </div>
+            <div class="products-grid">
+                <a href="stickers.html" class="product-card animate-on-scroll" style="--delay: 0.1s">
+                    <div class="product-card-image">
+                        <img src="assets/images/product1.png" alt="Delusional Sticker">
+                        <div class="product-badge">NEW</div>
+                        <div class="product-card-overlay">
+                            <span>View Details →</span>
+                        </div>
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-name">DELUSIONAL STICKER</h3>
+                        <p class="product-card-price">Rp 13.500</p>
+                    </div>
+                </a>
+                <a href="stickers.html" class="product-card animate-on-scroll" style="--delay: 0.5s">
+                    <div class="product-card-image">
+                        <img src="assets/images/stickerasli1.png" alt="Asli Sticker">
+                        <div class="product-badge">NEW</div>
+                        <div class="product-card-overlay">
+                            <span>View Details →</span>
+                        </div>
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-name">ASLI UDAH GAK KUAT STICKER</h3>
+                        <p class="product-card-price">Rp 13.500</p>
+                    </div>
+                </a>
+                <a href="stickers.html" class="product-card animate-on-scroll" style="--delay: 0.2s">
+                    <div class="product-card-image">
+                        <img src="assets/images/product3.png" alt="Banyak Rezeki Sticker">
+                        <div class="product-badge badge-hot">HOT</div>
+                        <div class="product-card-overlay">
+                            <span>View Details →</span>
+                        </div>
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-name">BANYAK REZEKI STICKER</h3>
+                        <p class="product-card-price">Rp 13.000</p>
+                    </div>
+                </a>
+                <a href="keychains.html" class="product-card animate-on-scroll" style="--delay: 0.3s">
+                    <div class="product-card-image">
+                        <img src="assets/images/product2.png" alt="Awas Jatoooh Acrylic Pin">
+                        <div class="product-badge badge-limited">LIMITED</div>
+                        <div class="product-card-overlay">
+                            <span>View Details →</span>
+                        </div>
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-name">AWAS JATOOOH ACRYLIC PIN</h3>
+                        <p class="product-card-price">Rp 42.200</p>
+                    </div>
+                </a>
+                <a href="stickers.html" class="product-card animate-on-scroll" style="--delay: 0.4s">
+                    <div class="product-card-image">
+                        <img src="assets/images/product4.png" alt="Concept Sticker">
+                        <div class="product-badge">NEW</div>
+                        <div class="product-card-overlay">
+                            <span>View Details →</span>
+                        </div>
+                    </div>
+                    <div class="product-card-info">
+                        <h3 class="product-card-name">CONCEPT STICKER</h3>
+                        <p class="product-card-price">Rp 13.000</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop by Category -->
+    <section class="section shop-category" id="shop-category">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">🛍️ BROWSE</span>
+                <h2 class="section-title">Shop by Category</h2>
+                <p class="section-desc">Temukan koleksi favoritmu di sini</p>
+            </div>
+            <div class="category-grid">
+                <a href="stickers.html" class="category-card animate-on-scroll" style="--delay: 0.1s">
+                    <div class="category-card-inner">
+                        <img src="assets/images/sticker-category.png" alt="Stickers" class="category-img">
+                        <div class="category-overlay">
+                            <div class="category-overlay-content">
+                                <span class="category-icon">🎨</span>
+                                <h3 class="category-name">STICKERS</h3>
+                                <p class="category-count">6+ Products</p>
+                                <span class="category-cta">Shop Now →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="keychains.html" class="category-card animate-on-scroll" style="--delay: 0.2s">
+                    <div class="category-card-inner">
+                        <img src="assets/images/keychain-category.png" alt="Keychains" class="category-img">
+                        <div class="category-overlay">
+                            <div class="category-overlay-content">
+                                <span class="category-icon">🔑</span>
+                                <h3 class="category-name">ACRYLICS</h3>
+                                <p class="category-count">5+ Products</p>
+                                <span class="category-cta">Shop Now →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="tshirts.html" class="category-card animate-on-scroll" style="--delay: 0.3s">
+                    <div class="category-card-inner">
+                        <img src="assets/images/tshirt-category.png" alt="T-Shirts" class="category-img">
+                        <div class="category-overlay">
+                            <div class="category-overlay-content">
+                                <span class="category-icon">👕</span>
+                                <h3 class="category-name">OTHER</h3>
+                                <p class="category-count">1+ Products</p>
+                                <span class="category-cta">Shop Now →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials" id="testimonials">
+        <div class="testimonials-bg" style="background-image: url('https://mgx-backend-cdn.metadl.com/generate/images/987906/2026-02-25/9ebaebae-8b29-453e-a178-751abdd7afb3.png')"></div>
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag">⭐ REVIEWS</span>
+                <h2 class="section-title" style="color: white;">Apa Kata Mereka?</h2>
+                <p class="section-desc" style="color: rgba(255,255,255,0.8);">Testimoni dari pelanggan setia Posiufo</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card animate-on-scroll" style="--delay: 0.1s">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Stikernya bagus banget! Glitter-nya kece dan waterproof beneran. Udah nempel di laptop 3 bulan masih oke 👍"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">A</div>
+                        <div>
+                            <h4 class="testimonial-name">Anisa R.</h4>
+                            <p class="testimonial-role">Sticker Lover</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll" style="--delay: 0.2s">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Keychain-nya super cute! Warnanya vibrant dan kualitasnya premium. Pasti order lagi deh 💜"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">D</div>
+                        <div>
+                            <h4 class="testimonial-name">Dinda S.</h4>
+                            <p class="testimonial-role">Keychain Collector</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card animate-on-scroll" style="--delay: 0.3s">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Pengiriman cepat, packaging rapi, dan produknya sesuai ekspektasi. Recommended banget! 🎉"</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">R</div>
+                        <div>
+                            <h4 class="testimonial-name">Rizky M.</h4>
+                            <p class="testimonial-role">Happy Customer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3 class="footer-logo">POSIUFO <span class="logo-sparkle">✦</span></h3>
+                        <p class="footer-about">Selamat datang di Posiufo, toko online yang menyediakan produk unik dan berkualitas dengan harga terjangkau. Kepuasan kamu adalah prioritas kami! 💜</p>
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/Posiufo" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                            </a>
+                            <a href="https://www.tiktok.com/@Posiufo" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="TikTok">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48v-7.15a8.16 8.16 0 005.58 2.18v-3.45a4.85 4.85 0 01-3.77-1.82V6.69h3.77z"/></svg>
+                            </a>
+                            <a href="https://x.com/Posiufo" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter/X">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer-links-col">
+                        <h4 class="footer-heading">Quick Links</h4>
+                        <ul class="footer-link-list">
+                            <li><a href="stickers.html">Stickers</a></li>
+                            <li><a href="keychains.html">Keychains</a></li>
+                            <li><a href="tshirts.html">Other</a></li>
+                            <li><a href="cart.html">Cart</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-col">
+                        <h4 class="footer-heading">Support</h4>
+                        <ul class="footer-link-list">
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">Shipping Info</a></li>
+                            <li><a href="#">Returns</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-col">
+                        <h4 class="footer-heading">Payment Methods</h4>
+                        <div class="payment-methods">
+                            <span class="payment-badge">💳 VISA</span>
+                            <span class="payment-badge">💳 Mastercard</span>
+                            <span class="payment-badge">🏦 BCA</span>
+                            <span class="payment-badge">🏦 Mandiri</span>
+                            <span class="payment-badge">📱 GoPay</span>
+                            <span class="payment-badge">📱 OVO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>© 2025 Posiufo. All rights reserved. Made with 💜</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+            <path d="M18 15l-6-6-6 6"></path>
+        </svg>
+    </button>
+
+    <script src="./script.js"></script>
+</body>
+</html>
