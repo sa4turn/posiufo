@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon_atoms.ico" type="image/x-icon">
+    <title>POSIUFO - Other Products</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="toast-message" id="toastMessage"></div>
+
+    <header class="subpage-header">
+        <nav class="subpage-nav">
+            <a href="index.html" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M15 18l-6-6 6-6"></path></svg>
+                <span>Back</span>
+            </a>
+            <span class="subpage-title">POSIUFO</span>
+            <a href="cart.html" class="subpage-cart-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 01-8 0"></path>
+                </svg>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <section class="subpage-hero">
+        <h1>👕 Other Products</h1>
+        <p>T-shirt dan produk lainnya dari Posiufo!</p>
+    </section>
+
+    <main class="subpage-products">
+        <div class="subpage-product-grid">
+            <div class="subpage-product-card animate-on-scroll" style="--delay: 0.05s">
+                <div class="subpage-product-img-wrapper">
+                    <img src="assets/images/tshirt-category.png" alt="Have a nice day Tshirt">
+                </div>
+                <div class="subpage-product-details">
+                    <h3 class="subpage-product-name">Have a Nice Day Tshirt</h3>
+                    <p class="subpage-product-desc">Kaos nyaman untuk sehari-hari.</p>
+                    <p class="subpage-product-price">Rp 150.000</p>
+                    <button class="add-to-cart-btn"
+                        data-product-id="shirts001"
+                        data-product-name="Have a Nice Day Tshirt"
+                        data-product-price="150000"
+                        data-product-image="assets/images/tshirt-category.png">
+                        🛒 Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="subpage-footer">
+        <p>© 2025 Posiufo. All rights reserved. Made with 💜</p>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>

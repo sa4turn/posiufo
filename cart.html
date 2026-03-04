@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://public-frontend-cos.metadl.com/mgx/img/favicon_atoms.ico" type="images/x-icon">
+    <title>POSIUFO - Cart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="toast-message" id="toastMessage"></div>
+
+    <header class="subpage-header">
+        <nav class="subpage-nav">
+            <a href="index.html" class="back-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M15 18l-6-6 6-6"></path></svg>
+                <span>Back to Shop</span>
+            </a>
+            <span class="subpage-title">POSIUFO</span>
+            <a href="cart.html" class="subpage-cart-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <path d="M16 10a4 4 0 01-8 0"></path>
+                </svg>
+                <span class="cart-badge" id="cartBadge">0</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Cart View -->
+    <main class="cart-page" id="cartView">
+        <div class="container">
+            <h1 class="cart-page-title">🛒 Your Cart</h1>
+
+            <div class="cart-items-box" id="cartItemsContainer">
+                <!-- Cart items rendered by JS -->
+            </div>
+
+            <div class="cart-summary-box">
+                <div class="cart-summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">Rp 0</span>
+                </div>
+                <div class="cart-summary-row">
+                    <span>Shipping:</span>
+                    <span id="cartShipping">Rp 0</span>
+                </div>
+                <div class="cart-summary-row total">
+                    <span>Total:</span>
+                    <span id="cartTotal">Rp 0</span>
+                </div>
+                <button class="cart-checkout-btn" id="checkoutBtn">PROCEED TO CHECKOUT →</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Checkout View (hidden by default) -->
+    <main class="cart-page" id="checkoutView" style="display: none;">
+        <div class="container" style="max-width: 1100px;">
+            <h1 class="cart-page-title">📋 Checkout</h1>
+
+            <form id="checkoutForm" class="checkout-layout">
+                <div class="checkout-left">
+                    <!-- Billing & Shipping Details -->
+                    <div class="checkout-section">
+                        <h3 class="checkout-section-title">Billing & Shipping Details</h3>
+                        <div class="form-group">
+                            <label for="checkout-email">Email Address</label>
+                            <input type="email" id="checkout-email" name="email" required placeholder="you@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-name">Full Name</label>
+                            <input type="text" id="checkout-name" name="name" required placeholder="Nama lengkap">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-phone">Phone Number</label>
+                            <input type="text" id="checkout-phone" name="phone" required placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-address">Street Address</label>
+                            <input type="text" id="checkout-address" name="address" required placeholder="Jl. Contoh No. 123">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkout-city">City</label>
+                                <input type="text" id="checkout-city" name="city" required placeholder="Kota">
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-postal">Postal Code</label>
+                                <input type="text" id="checkout-postal" name="postal" required placeholder="12345">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-country">Country</label>
+                            <input type="text" id="checkout-country" name="country" required placeholder="Indonesia" value="Indonesia">
+                        </div>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div class="checkout-section">
+                        <h3 class="checkout-section-title">Shipping Method</h3>
+                        <div class="shipping-options">
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping-method" value="10000" data-cost="10000" checked>
+                                <div class="shipping-option-content">
+                                    <div>
+                                        <span class="shipping-option-name">🚚 Standard Shipping</span>
+                                        <span class="shipping-option-desc">Estimasi 3-5 hari kerja</span>
+                                    </div>
+                                    <span class="shipping-option-price">Rp 10.000</span>
+                                </div>
+                            </label>
+                            <label class="shipping-option">
+                                <input type="radio" name="shipping-method" value="25000" data-cost="25000">
+                                <div class="shipping-option-content">
+                                    <div>
+                                        <span class="shipping-option-name">⚡ Express Shipping</span>
+                                        <span class="shipping-option-desc">Estimasi 1-2 hari kerja</span>
+                                    </div>
+                                    <span class="shipping-option-price">Rp 25.000</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="checkout-section">
+                        <h3 class="checkout-section-title">Payment Information</h3>
+                        <div class="form-group">
+                            <label for="checkout-card-name">Name on Card</label>
+                            <input type="text" id="checkout-card-name" name="card-name" required placeholder="Nama di kartu">
+                        </div>
+                        <div class="form-group">
+                            <label for="checkout-card-number">Card Number</label>
+                            <input type="text" id="checkout-card-number" name="card-number" required placeholder="•••• •••• •••• ••••" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="checkout-card-expiry">Expiry Date</label>
+                                <input type="text" id="checkout-card-expiry" name="card-expiry" required placeholder="MM/YY" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <label for="checkout-card-cvv">CVV</label>
+                                <input type="text" id="checkout-card-cvv" name="card-cvv" required placeholder="123" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="checkout-right">
+                    <div class="checkout-summary-card">
+                        <h3 class="checkout-section-title">Order Summary</h3>
+                        <div id="checkoutItemsList" class="checkout-items-list">
+                            <!-- Items rendered by JS -->
+                        </div>
+                        <div class="checkout-summary-divider"></div>
+                        <div class="checkout-summary-row">
+                            <span>Subtotal</span>
+                            <span id="checkoutSubtotal">Rp 0</span>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Shipping</span>
+                            <span id="checkoutShipping">Rp 10.000</span>
+                        </div>
+                        <div class="checkout-summary-row">
+                            <span>Tax (10%)</span>
+                            <span id="checkoutTax">Rp 0</span>
+                        </div>
+                        <div class="checkout-summary-divider"></div>
+                        <div class="checkout-summary-row checkout-total-row">
+                            <span>Total</span>
+                            <span id="checkoutTotal">Rp 0</span>
+                        </div>
+                        <button type="submit" class="place-order-btn">
+                            🛍️ PLACE ORDER
+                        </button>
+                        <p class="checkout-secure-note">🔒 Your payment information is secure</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="subpage-footer">
+        <p>© 2025 Posiufo. All rights reserved. Made with 💜</p>
+    </footer>
+
+    <script src="./script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartView = document.getElementById('cartView');
+            const checkoutView = document.getElementById('checkoutView');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const checkoutForm = document.getElementById('checkoutForm');
+            const checkoutItemsList = document.getElementById('checkoutItemsList');
+
+            // Override checkout button to show checkout form
+            if (checkoutBtn) {
+                checkoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const cart = window.getCart();
+                    if (cart.length === 0) {
+                        window.showToast('Keranjang kamu masih kosong!');
+                        return;
+                    }
+                    // Show checkout view
+                    cartView.style.display = 'none';
+                    checkoutView.style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    renderCheckoutSummary();
+                });
+            }
+
+            function renderCheckoutSummary() {
+                const cart = window.getCart();
+                if (!checkoutItemsList) return;
+
+                checkoutItemsList.innerHTML = '';
+                cart.forEach(item => {
+                    const itemEl = document.createElement('div');
+                    itemEl.classList.add('checkout-item');
+                    itemEl.innerHTML = `
+                        <img src="${item.images}" alt="${item.name}" class="checkout-item-img">
+                        <div class="checkout-item-info">
+                            <p class="checkout-item-name">${item.name}</p>
+                            <p class="checkout-item-qty">Qty: ${item.quantity}</p>
+                        </div>
+                        <p class="checkout-item-price">${window.formatCurrency(item.price * item.quantity)}</p>
+                    `;
+                    checkoutItemsList.appendChild(itemEl);
+                });
+
+                updateCheckoutTotals();
+            }
+
+            function updateCheckoutTotals() {
+                const cart = window.getCart();
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const selectedShipping = document.querySelector('input[name="shipping-method"]:checked');
+                const shippingCost = selectedShipping ? parseInt(selectedShipping.dataset.cost) : 10000;
+                const tax = Math.round(subtotal * 0.10);
+                const total = subtotal + shippingCost + tax;
+
+                const checkoutSubtotal = document.getElementById('checkoutSubtotal');
+                const checkoutShipping = document.getElementById('checkoutShipping');
+                const checkoutTax = document.getElementById('checkoutTax');
+                const checkoutTotal = document.getElementById('checkoutTotal');
+
+                if (checkoutSubtotal) checkoutSubtotal.textContent = window.formatCurrency(subtotal);
+                if (checkoutShipping) checkoutShipping.textContent = window.formatCurrency(shippingCost);
+                if (checkoutTax) checkoutTax.textContent = window.formatCurrency(tax);
+                if (checkoutTotal) checkoutTotal.textContent = window.formatCurrency(total);
+            }
+
+            // Listen for shipping method changes
+            const shippingOptions = document.querySelectorAll('input[name="shipping-method"]');
+            shippingOptions.forEach(option => {
+                option.addEventListener('change', updateCheckoutTotals);
+            });
+
+            // Handle form submission
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    window.showToast('Order berhasil ditempatkan! (Demo) 🎉');
+                    // Could clear cart here: window.saveCart([]);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
